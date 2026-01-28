@@ -38,3 +38,8 @@ out/
 
 ### Kotlin ###
 .kotlin
+
+### Custom ###
+.env
+db_dev.mv.db
+db_trace.mv.db
