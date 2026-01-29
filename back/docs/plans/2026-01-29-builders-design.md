@@ -176,9 +176,58 @@
 
 ---
 
-## 8. 다음 단계
+## 8. API 설계
 
+### 8.1 인증
+
+| Method | Path | 설명 | 인증 |
+|--------|------|-----|------|
+| POST | `/api/auth/google` | 구글 로그인 | X |
+| POST | `/api/auth/apple` | 애플 로그인 | X |
+| POST | `/api/auth/logout` | 로그아웃 | O |
+| GET | `/api/auth/me` | 내 정보 조회 | O |
+| PATCH | `/api/auth/me` | 내 정보 수정 (닉네임, 연락처) | O |
+
+### 8.2 게시글
+
+| Method | Path | 설명 | 인증 |
+|--------|------|-----|------|
+| GET | `/api/posts` | 게시글 목록 조회 | X |
+| GET | `/api/posts/{id}` | 게시글 상세 조회 | X |
+| POST | `/api/posts` | 게시글 작성 → 심사대기 | O |
+| PATCH | `/api/posts/{id}` | 게시글 수정 | O |
+| DELETE | `/api/posts/{id}` | 게시글 삭제 | O |
+| GET | `/api/me/posts` | 내가 올린 게시글 목록 | O |
+
+### 8.3 연락처 열람
+
+| Method | Path | 설명 | 인증 |
+|--------|------|-----|------|
+| POST | `/api/posts/{id}/contact` | 연락처 열람 (결제 후) | O |
+| GET | `/api/me/purchased-posts` | 내가 결제한 프로젝트 목록 | O |
+
+### 8.4 결제
+
+| Method | Path | 설명 | 인증 |
+|--------|------|-----|------|
+| POST | `/api/payments/verify` | 인앱결제 영수증 검증 | O |
+
+### 8.5 관리자
+
+| Method | Path | 설명 | 인증 |
+|--------|------|-----|------|
+| GET | `/api/admin/posts/pending` | 심사대기 게시글 목록 | ADMIN |
+| PATCH | `/api/admin/posts/{id}/approve` | 게시글 승인 | ADMIN |
+| PATCH | `/api/admin/posts/{id}/reject` | 게시글 반려 (사유 포함) | ADMIN |
+| DELETE | `/api/admin/posts/{id}` | 게시글 강제 삭제 | ADMIN |
+| GET | `/api/admin/users` | 회원 목록 | ADMIN |
+| PATCH | `/api/admin/users/{id}/ban` | 회원 제재 | ADMIN |
+
+---
+
+## 9. 다음 단계
+
+- [x] API 설계
 - [ ] 화면 구성 설계
-- [ ] API 설계
 - [ ] 기술스택 확정
 - [ ] 개발 시작
