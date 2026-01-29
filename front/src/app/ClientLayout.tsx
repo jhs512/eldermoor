@@ -297,7 +297,7 @@ export default function ClientLayout({
       <footer className="border-t py-4">
         <div className="container mx-auto px-4 flex justify-center items-center gap-4 text-sm text-muted-foreground">
           <span className="flex items-center gap-1">
-            <Copyright className="h-4 w-4" /> 2025 10xunicon
+            <Copyright className="h-4 w-4" /> 2026 10xunicon
           </span>
           {isAdmin && !isAdminPage && (
             <Button variant="link" size="sm" asChild>
