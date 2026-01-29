@@ -31,8 +31,9 @@ export default function PaginationType1({
 
   if (totalPages <= 1) return null;
 
-  const PageNumber = ({ pageNum }: { pageNum: number }) => (
+  const renderPageLink = (pageNum: number) => (
     <Link
+      key={pageNum}
       href={pageButtonUrl(pageNum)}
       style={{
         marginRight: "10px",
@@ -45,7 +46,7 @@ export default function PaginationType1({
 
   return (
     <nav className={className} style={{ marginTop: "20px" }}>
-      <PageNumber pageNum={1} />
+      {renderPageLink(1)}
 
       {prevEllipsisButtonPageNumber && (
         <Link
@@ -56,9 +57,7 @@ export default function PaginationType1({
         </Link>
       )}
 
-      {middlePages.map((pageNum) => (
-        <PageNumber key={pageNum} pageNum={pageNum} />
-      ))}
+      {middlePages.map((pageNum) => renderPageLink(pageNum))}
 
       {nextEllipsisButtonPageNumber && (
         <Link
@@ -69,7 +68,7 @@ export default function PaginationType1({
         </Link>
       )}
 
-      <PageNumber pageNum={totalPages} />
+      {renderPageLink(totalPages)}
     </nav>
   );
 }
