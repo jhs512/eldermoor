@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
 import { useAuthContext } from "@/global/auth/hooks/useAuth";
-import { FaGoogle } from "react-icons/fa";
 import { GiUnicorn } from "react-icons/gi";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -32,7 +31,6 @@ import {
   LogIn,
   LogOut,
   Menu,
-  MessageCircle,
   MonitorCog,
   User,
   UserRoundSearch,
@@ -50,13 +48,6 @@ export default function ClientLayout({
   const { loginMember, isLogin, isAdmin, logout: _logout } = authState;
 
   const isAdminPage = pathname.startsWith("/adm");
-
-  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL as string;
-  const frontendBaseUrl = process.env.NEXT_PUBLIC_FRONTEND_BASE_URL as string;
-  const redirectUrl = encodeURIComponent(`${frontendBaseUrl}/members/me`);
-
-  const loginUrl = (providerTypeCode: string) =>
-    `${apiBaseUrl}/oauth2/authorization/${providerTypeCode}?redirectUrl=${redirectUrl}`;
 
   const logout = () => {
     _logout(() => router.replace("/"));
@@ -109,42 +100,17 @@ export default function ClientLayout({
                   <Separator className="my-2" />
 
                   {!isLogin && (
-                    <>
-                      <DrawerClose asChild>
-                        <Button
-                          variant="ghost"
-                          className="w-full justify-start"
-                          asChild
-                        >
-                          <Link href="/members/login">
-                            <LogIn className="mr-2 h-4 w-4" /> 로그인
-                          </Link>
-                        </Button>
-                      </DrawerClose>
-                      <DrawerClose asChild>
-                        <Button
-                          variant="ghost"
-                          className="w-full justify-start"
-                          asChild
-                        >
-                          <a href={loginUrl("kakao")}>
-                            <MessageCircle className="mr-2 h-4 w-4" /> 카카오
-                            로그인
-                          </a>
-                        </Button>
-                      </DrawerClose>
-                      <DrawerClose asChild>
-                        <Button
-                          variant="ghost"
-                          className="w-full justify-start"
-                          asChild
-                        >
-                          <a href={loginUrl("google")}>
-                            <FaGoogle className="mr-2 h-4 w-4" /> 구글 로그인
-                          </a>
-                        </Button>
-                      </DrawerClose>
-                    </>
+                    <DrawerClose asChild>
+                      <Button
+                        variant="ghost"
+                        className="w-full justify-start"
+                        asChild
+                      >
+                        <Link href="/members/login">
+                          <LogIn className="mr-2 h-4 w-4" /> 로그인
+                        </Link>
+                      </Button>
+                    </DrawerClose>
                   )}
 
                   {isLogin && (
@@ -233,35 +199,21 @@ export default function ClientLayout({
           </Button>
 
           {isAdminPage && (
-            <>
-              <Button variant="ghost" asChild>
-                <Link href="/adm/members">
-                  <UserRoundSearch className="mr-2 h-4 w-4" /> 회원관리
-                </Link>
-              </Button>
-            </>
+            <Button variant="ghost" asChild>
+              <Link href="/adm/members">
+                <UserRoundSearch className="mr-2 h-4 w-4" /> 회원관리
+              </Link>
+            </Button>
           )}
 
           <div className="flex-grow" />
 
           {!isLogin && (
-            <>
-              <Button variant="ghost" asChild>
-                <Link href="/members/login">
-                  <LogIn className="mr-2 h-4 w-4" /> 로그인
-                </Link>
-              </Button>
-              <Button variant="ghost" asChild>
-                <a href={loginUrl("kakao")}>
-                  <MessageCircle className="mr-2 h-4 w-4" /> 카카오
-                </a>
-              </Button>
-              <Button variant="ghost" asChild>
-                <a href={loginUrl("google")}>
-                  <FaGoogle className="mr-2 h-4 w-4" /> 구글
-                </a>
-              </Button>
-            </>
+            <Button variant="ghost" asChild>
+              <Link href="/members/login">
+                <LogIn className="mr-2 h-4 w-4" /> 로그인
+              </Link>
+            </Button>
           )}
 
           {isLogin && (

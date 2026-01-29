@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import withLogout from "@/global/auth/hoc/withLogout";
 import { useAuthContext } from "@/global/auth/hooks/useAuth";
 import client from "@/global/backend/client";
-import { FaGoogle } from "react-icons/fa";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -18,20 +17,12 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
 
-import { LogIn, MessageCircle, Shield } from "lucide-react";
+import { LogIn, Shield } from "lucide-react";
 
 export default withLogout(function Page() {
   const router = useRouter();
   const { setLoginMember } = useAuthContext();
-
-  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL as string;
-  const frontendBaseUrl = process.env.NEXT_PUBLIC_FRONTEND_BASE_URL as string;
-  const redirectUrl = encodeURIComponent(`${frontendBaseUrl}/members/me`);
-
-  const loginUrl = (providerTypeCode: string) =>
-    `${apiBaseUrl}/oauth2/authorization/${providerTypeCode}?redirectUrl=${redirectUrl}`;
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -133,28 +124,6 @@ export default withLogout(function Page() {
               로그인
             </Button>
           </form>
-
-          <div className="relative my-6">
-            <Separator />
-            <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-card px-2 text-xs text-muted-foreground">
-              또는
-            </span>
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <Button variant="outline" className="w-full" asChild>
-              <a href={loginUrl("kakao")}>
-                <MessageCircle className="mr-2 h-4 w-4" />
-                카카오로 로그인
-              </a>
-            </Button>
-            <Button variant="outline" className="w-full" asChild>
-              <a href={loginUrl("google")}>
-                <FaGoogle className="mr-2 h-4 w-4" />
-                구글로 로그인
-              </a>
-            </Button>
-          </div>
         </CardContent>
       </Card>
     </div>
