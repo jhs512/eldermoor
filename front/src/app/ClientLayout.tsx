@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
-import Unicorn from "@/components/icons/Unicorn";
 import { useAuthContext } from "@/global/auth/hooks/useAuth";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -86,7 +85,7 @@ export default function ClientLayout({
                       asChild
                     >
                       <Link href="/">
-                        <Unicorn className="mr-2 h-4 w-4" /> 홈
+                        <span className="mr-2">🦄</span> 홈
                       </Link>
                     </Button>
                   </DrawerClose>
@@ -175,7 +174,7 @@ export default function ClientLayout({
 
           <Button variant="ghost" asChild>
             <Link href="/">
-              <Unicorn className="mr-1 h-4 w-4" /> 10xunicon
+              <span className="mr-1">🦄</span> 10xunicon
             </Link>
           </Button>
 
@@ -225,7 +224,7 @@ export default function ClientLayout({
         <div className="hidden sm:flex container mx-auto py-1 px-4">
           <Button variant="ghost" asChild>
             <Link href="/">
-              <Unicorn className="mr-1 h-4 w-4" /> 10xunicon
+              <span className="mr-1">🦄</span> 10xunicon
             </Link>
           </Button>
 
