@@ -1,0 +1,33 @@
+import { Geist_Mono } from "next/font/google";
+
+import type { Metadata } from "next";
+
+import "./globals.css";
+
+import ContextLayout from "./ContextLayout";
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: "사이트 A",
+  description: "스프링부트, Next.js 연동",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="ko" suppressHydrationWarning>
+      <body
+        className={`${geistMono.variable} antialiased min-h-screen flex flex-col`}
+      >
+        <ContextLayout>{children}</ContextLayout>
+      </body>
+    </html>
+  );
+}
