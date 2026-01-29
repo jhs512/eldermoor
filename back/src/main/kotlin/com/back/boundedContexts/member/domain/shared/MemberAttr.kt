@@ -1,4 +1,4 @@
-package com.back.boundedContexts.member.domain
+package com.back.boundedContexts.member.domain.shared
 
 import com.back.global.jpa.domain.shared.BaseTime
 import jakarta.persistence.Column

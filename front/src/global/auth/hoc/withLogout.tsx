@@ -9,7 +9,11 @@ export default function withLogout<P extends object>(
     const { isLogin } = useAuthContext();
 
     if (isLogin) {
-      return <div>이미 로그인 되었습니다.</div>;
+      return (
+        <div className="flex-1 flex justify-center items-center text-xl font-medium">
+          이미 로그인 되었습니다.
+        </div>
+      );
     }
 
     return <Component {...props} />;

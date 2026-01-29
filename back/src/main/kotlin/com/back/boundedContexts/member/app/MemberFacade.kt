@@ -1,6 +1,6 @@
 package com.back.boundedContexts.member.app
 
-import com.back.boundedContexts.member.domain.Member
+import com.back.boundedContexts.member.domain.shared.Member
 import com.back.boundedContexts.member.out.MemberRepository
 import com.back.global.dto.RsData
 import com.back.global.exceptions.BusinessException

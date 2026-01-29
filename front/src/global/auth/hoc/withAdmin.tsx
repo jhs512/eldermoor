@@ -9,11 +9,19 @@ export default function withAdmin<P extends object>(
     const { isLogin, isAdmin } = useAuthContext();
 
     if (!isLogin) {
-      return <div>로그인 후 이용해주세요.</div>;
+      return (
+        <div className="flex-1 flex justify-center items-center text-xl font-medium">
+          로그인 후 이용해주세요.
+        </div>
+      );
     }
 
     if (!isAdmin) {
-      return <div>관리자 권한이 없습니다.</div>;
+      return (
+        <div className="flex-1 flex justify-center items-center text-xl font-medium text-destructive">
+          관리자 권한이 없습니다.
+        </div>
+      );
     }
 
     return <Component {...props} />;

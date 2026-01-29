@@ -14,7 +14,7 @@ export default function ContextLayout({
   return (
     <AuthProvider>
       <ClientLayout>{children}</ClientLayout>
-      <Toaster richColors />
+      <Toaster richColors position="top-center" />
     </AuthProvider>
   );
 }

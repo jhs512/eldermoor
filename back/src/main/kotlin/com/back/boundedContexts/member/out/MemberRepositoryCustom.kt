@@ -1,6 +1,6 @@
 package com.back.boundedContexts.member.out
 
-import com.back.boundedContexts.member.domain.Member
+import com.back.boundedContexts.member.domain.shared.Member
 import com.back.standard.dto.member.type1.MemberSearchKeywordType1
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable

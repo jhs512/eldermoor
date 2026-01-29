@@ -1,0 +1,70 @@
+package com.back.boundedContexts.post.app
+
+import com.back.boundedContexts.member.domain.shared.Member
+import com.back.boundedContexts.post.domain.Post
+import com.back.boundedContexts.post.domain.PostComment
+import com.back.boundedContexts.post.out.PostRepository
+import com.back.standard.dto.post.type1.PostSearchKeywordType1
+import com.back.standard.dto.post.type1.PostSearchSortType1
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
+import org.springframework.stereotype.Service
+import kotlin.jvm.optionals.getOrNull
+
+@Service
+class PostFacade(
+    private val postRepository: PostRepository,
+) {
+    fun count(): Long = postRepository.count()
+
+    fun write(author: Member, title: String, content: String): Post {
+        val post = Post(author, title, content)
+
+        author.incrementPostsCount()
+
+        return postRepository.save(post)
+    }
+
+    fun findById(id: Int): Post? = postRepository.findById(id).getOrNull()
+
+    fun modify(post: Post, title: String, content: String) =
+        post.modify(title, content)
+
+    fun writeComment(author: Member, post: Post, content: String): PostComment {
+        val postComment = post.addComment(author, content)
+
+        return postComment
+    }
+
+    fun deleteComment(post: Post, postComment: PostComment): Boolean =
+        post.deleteComment(postComment)
+
+    fun modifyComment(postComment: PostComment, content: String) {
+        postComment.modify(content)
+    }
+
+    fun delete(post: Post) {
+        post.author.decrementPostsCount()
+
+        postRepository.delete(post)
+    }
+
+    fun findLatest(): Post? = postRepository.findFirstByOrderByIdDesc()
+
+    fun findPagedByKw(
+        kwType: PostSearchKeywordType1,
+        kw: String,
+        sort: PostSearchSortType1,
+        page: Int,
+        pageSize: Int
+    ): Page<Post> =
+        postRepository.findQPagedByKw(
+            kwType,
+            kw,
+            PageRequest.of(
+                page - 1,
+                pageSize,
+                sort.sortBy
+            )
+        )
+}

@@ -1,8 +1,9 @@
-package com.back.boundedContexts.member.domain
+package com.back.boundedContexts.member.domain.shared
 
 import com.back.boundedContexts.member.dto.MemberDto
 import com.back.boundedContexts.member.dto.MemberWithUsernameDto
 import com.back.boundedContexts.member.out.MemberAttrRepository
+import com.back.boundedContexts.post.domain.PostMember
 import com.back.global.jpa.domain.shared.BaseTime
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
@@ -23,7 +24,7 @@ class Member(
     var nickname: String,
     @field:Column(unique = true)
     var apiKey: String,
-) : BaseTime(id) {
+) : BaseTime(id), PostMember {
 
     // ================================
     // Companion Object
@@ -66,7 +67,9 @@ class Member(
     // ================================
     // 가상 속성 (Profile)
     // ================================
-    val name: String
+    override val self: Member get() = this
+
+    override val name: String
         get() = nickname
 
     @delegate:Transient

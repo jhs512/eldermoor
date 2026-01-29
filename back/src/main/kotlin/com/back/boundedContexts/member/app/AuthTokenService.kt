@@ -1,6 +1,6 @@
 package com.back.boundedContexts.member.app
 
-import com.back.boundedContexts.member.domain.Member
+import com.back.boundedContexts.member.domain.shared.Member
 import com.back.boundedContexts.member.dto.shared.AccessTokenPayload
 import com.back.standard.util.Ut
 import org.springframework.beans.factory.annotation.Value

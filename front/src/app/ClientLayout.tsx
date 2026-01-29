@@ -1,10 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+
+import { Suspense, useEffect } from "react";
 
 import { useAuthContext } from "@/global/auth/hooks/useAuth";
 import { GiUnicorn } from "react-icons/gi";
+import { toast } from "sonner";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -41,9 +44,34 @@ export default function ClientLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  return (
+    <Suspense>
+      <ClientLayoutContent>{children}</ClientLayoutContent>
+    </Suspense>
+  );
+}
+
+function ClientLayoutContent({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   const authState = useAuthContext();
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const message = searchParams.get("sonner");
+    if (message) {
+      toast.success(message, {
+        action: {
+          label: "확인",
+          onClick: () => {},
+        },
+      });
+    }
+  }, [searchParams]);
 
   const { loginMember, isLogin, isAdmin, logout: _logout } = authState;
 

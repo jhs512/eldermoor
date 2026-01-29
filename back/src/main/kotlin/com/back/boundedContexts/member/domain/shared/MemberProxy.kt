@@ -1,4 +1,4 @@
-package com.back.boundedContexts.member.domain
+package com.back.boundedContexts.member.domain.shared
 
 class MemberProxy(
     private val real: Member,

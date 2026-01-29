@@ -17,7 +17,13 @@ import { LogIn, MessageCircle } from "lucide-react";
 export default withLogout(function Page() {
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL as string;
   const frontendBaseUrl = process.env.NEXT_PUBLIC_FRONTEND_BASE_URL as string;
-  const redirectUrl = encodeURIComponent(`${frontendBaseUrl}/members/me`);
+  const redirectParams = new URLSearchParams({
+    sonner: "환영합니다.",
+  });
+
+  const redirectUrl = encodeURIComponent(
+    `${frontendBaseUrl}/members/me?${redirectParams.toString()}`,
+  );
 
   const loginUrl = (providerTypeCode: string) =>
     `${apiBaseUrl}/oauth2/authorization/${providerTypeCode}?redirectUrl=${redirectUrl}`;

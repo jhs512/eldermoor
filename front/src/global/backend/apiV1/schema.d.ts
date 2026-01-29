@@ -12,7 +12,7 @@ export type paths = {
             cookie?: never;
         };
         /** 다건 조회 */
-        get: operations["getItems"];
+        get: operations["getItems_2"];
         put?: never;
         post?: never;
         delete?: never;
@@ -29,7 +29,7 @@ export type paths = {
             cookie?: never;
         };
         /** 단건 조회 */
-        get: operations["getItem"];
+        get: operations["getItem_2"];
         put?: never;
         post?: never;
         delete?: never;
@@ -140,6 +140,80 @@ export type paths = {
         patch?: never;
         trace?: never;
     };
+    "/post/api/v1/posts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 다건 조회 */
+        get: operations["getItems"];
+        put?: never;
+        /** 작성 */
+        post: operations["write"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/post/api/v1/posts/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 단건 조회 */
+        get: operations["getItem_1"];
+        /** 수정 */
+        put: operations["modify_1"];
+        post?: never;
+        /** 삭제 */
+        delete: operations["delete_1"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/post/api/v1/posts/{postId}/comments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 다건 조회 */
+        get: operations["getItems_1"];
+        put?: never;
+        /** 작성 */
+        post: operations["write_1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/post/api/v1/posts/{postId}/comments/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 단건 조회 */
+        get: operations["getItem"];
+        /** 수정 */
+        put: operations["modify"];
+        post?: never;
+        /** 삭제 */
+        delete: operations["delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 };
 export type webhooks = Record<string, never>;
 export type components = {
@@ -200,6 +274,66 @@ export type components = {
             content: components["schemas"]["MemberWithUsernameDto"][];
             pageable: components["schemas"]["PageableDto"];
         };
+        PageDtoPostDto: {
+            content: components["schemas"]["PostDto"][];
+            pageable: components["schemas"]["PageableDto"];
+        };
+        PostCommentDto: {
+            /** Format: int32 */
+            authorId: number;
+            authorName: string;
+            authorProfileImgUrl: string;
+            content: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: int32 */
+            id: number;
+            /** Format: date-time */
+            modifiedAt: string;
+            /** Format: int32 */
+            postId: number;
+        };
+        PostCommentModifyReqBody: {
+            content: string;
+        };
+        PostCommentWriteReqBody: {
+            content: string;
+        };
+        PostDto: {
+            /** Format: int32 */
+            authorId: number;
+            authorName: string;
+            authorProfileImgUrl: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: int32 */
+            id: number;
+            /** Format: date-time */
+            modifiedAt: string;
+            title: string;
+        };
+        PostModifyReqBody: {
+            content: string;
+            title: string;
+        };
+        PostWithContentDto: {
+            /** Format: int32 */
+            authorId: number;
+            authorName: string;
+            authorProfileImgUrl: string;
+            content: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: int32 */
+            id: number;
+            /** Format: date-time */
+            modifiedAt: string;
+            title: string;
+        };
+        PostWriteReqBody: {
+            content: string;
+            title: string;
+        };
         RsDataMemberDto: {
             data: components["schemas"]["MemberDto"];
             msg: string;
@@ -207,6 +341,16 @@ export type components = {
         };
         RsDataMemberLoginResBody: {
             data: components["schemas"]["MemberLoginResBody"];
+            msg: string;
+            resultCode: string;
+        };
+        RsDataPostCommentDto: {
+            data: components["schemas"]["PostCommentDto"];
+            msg: string;
+            resultCode: string;
+        };
+        RsDataPostDto: {
+            data: components["schemas"]["PostDto"];
             msg: string;
             resultCode: string;
         };
@@ -224,7 +368,7 @@ export type components = {
 };
 export type $defs = Record<string, never>;
 export interface operations {
-    getItems: {
+    getItems_2: {
         parameters: {
             query?: {
                 kw?: string;
@@ -259,7 +403,7 @@ export interface operations {
             };
         };
     };
-    getItem: {
+    getItem_2: {
         parameters: {
             query?: never;
             header?: never;
@@ -459,6 +603,337 @@ export interface operations {
                 };
                 content: {
                     "application/json;charset=UTF-8": string;
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["RsDataVoid"];
+                };
+            };
+        };
+    };
+    getItems: {
+        parameters: {
+            query?: {
+                kw?: string;
+                kwType?: "TITLE" | "CONTENT" | "AUTHOR_NAME" | "ALL";
+                page?: number;
+                pageSize?: number;
+                sort?: "ID" | "ID_ASC" | "AUTHOR_NAME" | "AUTHOR_NAME_ASC";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["PageDtoPostDto"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["RsDataVoid"];
+                };
+            };
+        };
+    };
+    write: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PostWriteReqBody"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["RsDataPostDto"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["RsDataVoid"];
+                };
+            };
+        };
+    };
+    getItem_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["PostWithContentDto"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["RsDataVoid"];
+                };
+            };
+        };
+    };
+    modify_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PostModifyReqBody"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["RsDataVoid"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["RsDataVoid"];
+                };
+            };
+        };
+    };
+    delete_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["RsDataVoid"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["RsDataVoid"];
+                };
+            };
+        };
+    };
+    getItems_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                postId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["PostCommentDto"][];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["RsDataVoid"];
+                };
+            };
+        };
+    };
+    write_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                postId: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PostCommentWriteReqBody"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["RsDataPostCommentDto"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["RsDataVoid"];
+                };
+            };
+        };
+    };
+    getItem: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+                postId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["PostCommentDto"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["RsDataVoid"];
+                };
+            };
+        };
+    };
+    modify: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+                postId: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PostCommentModifyReqBody"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["RsDataVoid"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["RsDataVoid"];
+                };
+            };
+        };
+    };
+    delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+                postId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["RsDataVoid"];
                 };
             };
             /** @description Bad Request */

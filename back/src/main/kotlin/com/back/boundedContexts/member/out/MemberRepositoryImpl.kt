@@ -1,7 +1,7 @@
 package com.back.boundedContexts.member.out
 
-import com.back.boundedContexts.member.domain.Member
-import com.back.boundedContexts.member.domain.QMember
+import com.back.boundedContexts.member.domain.shared.Member
+import com.back.boundedContexts.member.domain.shared.QMember
 
 import com.back.standard.dto.member.type1.MemberSearchKeywordType1
 import com.back.standard.util.QueryDslUtil

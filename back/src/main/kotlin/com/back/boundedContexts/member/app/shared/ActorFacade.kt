@@ -1,7 +1,7 @@
 package com.back.boundedContexts.member.app.shared
 
 import com.back.boundedContexts.member.app.AuthTokenService
-import com.back.boundedContexts.member.domain.Member
+import com.back.boundedContexts.member.domain.shared.Member
 import com.back.boundedContexts.member.out.MemberRepository
 import org.springframework.stereotype.Service
 
