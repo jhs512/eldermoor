@@ -22,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" suppressHydrationWarning>
+    <html lang="ko" className="light" suppressHydrationWarning>
       <body
         className={`${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >

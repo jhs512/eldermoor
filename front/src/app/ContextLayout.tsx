@@ -2,6 +2,8 @@
 
 import { AuthProvider } from "@/global/auth/hooks/useAuth";
 
+import { Toaster } from "@/components/ui/sonner";
+
 import ClientLayout from "./ClientLayout";
 
 export default function ContextLayout({
@@ -12,6 +14,7 @@ export default function ContextLayout({
   return (
     <AuthProvider>
       <ClientLayout>{children}</ClientLayout>
+      <Toaster richColors />
     </AuthProvider>
   );
 }

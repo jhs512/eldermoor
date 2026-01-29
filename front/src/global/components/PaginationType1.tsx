@@ -2,6 +2,16 @@ import Link from "next/link";
 
 import { usePagination } from "@/global/hooks/usePagination";
 
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+
 export interface PaginationProps {
   className?: string;
   baseQueryString: string;
@@ -31,44 +41,75 @@ export default function PaginationType1({
 
   if (totalPages <= 1) return null;
 
-  const renderPageLink = (pageNum: number) => (
-    <Link
-      key={pageNum}
-      href={pageButtonUrl(pageNum)}
-      style={{
-        marginRight: "10px",
-        fontWeight: pageNum === currentPageNumber ? "bold" : "normal",
-      }}
-    >
-      {pageNum}
-    </Link>
-  );
+  const hasPreviousPage = currentPageNumber > 1;
+  const hasNextPage = currentPageNumber < totalPages;
 
   return (
-    <nav className={className} style={{ marginTop: "20px" }}>
-      {renderPageLink(1)}
+    <Pagination className={className}>
+      <PaginationContent>
+        <PaginationItem>
+          <PaginationPrevious
+            href={hasPreviousPage ? pageButtonUrl(currentPageNumber - 1) : "#"}
+            aria-disabled={!hasPreviousPage}
+            className={!hasPreviousPage ? "pointer-events-none opacity-50" : ""}
+          />
+        </PaginationItem>
 
-      {prevEllipsisButtonPageNumber && (
-        <Link
-          href={pageButtonUrl(prevEllipsisButtonPageNumber)}
-          style={{ marginRight: "10px" }}
-        >
-          ...
-        </Link>
-      )}
+        <PaginationItem>
+          <PaginationLink
+            href={pageButtonUrl(1)}
+            isActive={currentPageNumber === 1}
+          >
+            1
+          </PaginationLink>
+        </PaginationItem>
 
-      {middlePages.map((pageNum) => renderPageLink(pageNum))}
+        {prevEllipsisButtonPageNumber && (
+          <PaginationItem>
+            <Link href={pageButtonUrl(prevEllipsisButtonPageNumber)}>
+              <PaginationEllipsis />
+            </Link>
+          </PaginationItem>
+        )}
 
-      {nextEllipsisButtonPageNumber && (
-        <Link
-          href={pageButtonUrl(nextEllipsisButtonPageNumber)}
-          style={{ marginRight: "10px" }}
-        >
-          ...
-        </Link>
-      )}
+        {middlePages.map((pageNum) => (
+          <PaginationItem key={pageNum}>
+            <PaginationLink
+              href={pageButtonUrl(pageNum)}
+              isActive={pageNum === currentPageNumber}
+            >
+              {pageNum}
+            </PaginationLink>
+          </PaginationItem>
+        ))}
 
-      {renderPageLink(totalPages)}
-    </nav>
+        {nextEllipsisButtonPageNumber && (
+          <PaginationItem>
+            <Link href={pageButtonUrl(nextEllipsisButtonPageNumber)}>
+              <PaginationEllipsis />
+            </Link>
+          </PaginationItem>
+        )}
+
+        {totalPages > 1 && (
+          <PaginationItem>
+            <PaginationLink
+              href={pageButtonUrl(totalPages)}
+              isActive={currentPageNumber === totalPages}
+            >
+              {totalPages}
+            </PaginationLink>
+          </PaginationItem>
+        )}
+
+        <PaginationItem>
+          <PaginationNext
+            href={hasNextPage ? pageButtonUrl(currentPageNumber + 1) : "#"}
+            aria-disabled={!hasNextPage}
+            className={!hasNextPage ? "pointer-events-none opacity-50" : ""}
+          />
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
   );
 }

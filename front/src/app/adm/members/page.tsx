@@ -168,7 +168,7 @@ function PageContent() {
         </Select>
       </div>
 
-      <Dialog open={open} onOpenChange={setOpen}>
+      <Dialog open={open} onOpenChange={setOpen} modal>
         <DialogContent>
           <DialogHeader>
             <DialogTitle className="text-xl">검색</DialogTitle>
@@ -193,7 +193,7 @@ function PageContent() {
                 <SelectTrigger>
                   <SelectValue placeholder="검색 타입" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent position="popper" className="z-[100]">
                   <SelectGroup>
                     <SelectItem value="ALL">전체</SelectItem>
                     <SelectItem value="USERNAME">아이디</SelectItem>

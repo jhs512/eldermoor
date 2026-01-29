@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "pretendard/dist/web/variable/pretendardvariable.css";
-@import "tw-animate-css";
+
+@plugin "tailwindcss-animate";
 
 @custom-variant dark (&:is(.dark *));
 
