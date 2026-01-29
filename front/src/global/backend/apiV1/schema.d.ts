@@ -228,10 +228,10 @@ export interface operations {
         parameters: {
             query?: {
                 kw?: string;
-                kwType?: PathsMemberApiV1AdmMembersGetParametersQueryKwType;
+                kwType?: "USERNAME" | "NICKNAME" | "ALL";
                 page?: number;
                 pageSize?: number;
-                sort?: PathsMemberApiV1AdmMembersGetParametersQuerySort;
+                sort?: "ID" | "ID_ASC" | "USERNAME" | "USERNAME_ASC" | "NICKNAME" | "NICKNAME_ASC";
             };
             header?: never;
             path?: never;
@@ -472,17 +472,4 @@ export interface operations {
             };
         };
     };
-}
-export enum PathsMemberApiV1AdmMembersGetParametersQueryKwType {
-    USERNAME = "USERNAME",
-    NICKNAME = "NICKNAME",
-    ALL = "ALL"
-}
-export enum PathsMemberApiV1AdmMembersGetParametersQuerySort {
-    ID = "ID",
-    ID_ASC = "ID_ASC",
-    USERNAME = "USERNAME",
-    USERNAME_ASC = "USERNAME_ASC",
-    NICKNAME = "NICKNAME",
-    NICKNAME_ASC = "NICKNAME_ASC"
 }

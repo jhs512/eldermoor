@@ -7,56 +7,33 @@ import { Suspense, useEffect, useState } from "react";
 
 import withAdmin from "@/global/auth/hoc/withAdmin";
 import type { components } from "@/global/backend/apiV1/schema";
-import {
-  PathsMemberApiV1AdmMembersGetParametersQueryKwType,
-  PathsMemberApiV1AdmMembersGetParametersQuerySort,
-} from "@/global/backend/apiV1/schema";
 import client from "@/global/backend/client";
 import PaginationType1 from "@/global/components/PaginationType1";
 
 type PageDtoMemberWithUsernameDto =
   components["schemas"]["PageDtoMemberWithUsernameDto"];
+type KwType = "ALL" | "USERNAME" | "NICKNAME";
+type Sort =
+  | "ID"
+  | "ID_ASC"
+  | "USERNAME"
+  | "USERNAME_ASC"
+  | "NICKNAME"
+  | "NICKNAME_ASC";
 
-const KW_TYPE_OPTIONS = [
-  {
-    value: PathsMemberApiV1AdmMembersGetParametersQueryKwType.ALL,
-    label: "전체",
-  },
-  {
-    value: PathsMemberApiV1AdmMembersGetParametersQueryKwType.USERNAME,
-    label: "아이디",
-  },
-  {
-    value: PathsMemberApiV1AdmMembersGetParametersQueryKwType.NICKNAME,
-    label: "닉네임",
-  },
+const KW_TYPE_OPTIONS: { value: KwType; label: string }[] = [
+  { value: "ALL", label: "전체" },
+  { value: "USERNAME", label: "아이디" },
+  { value: "NICKNAME", label: "닉네임" },
 ];
 
-const SORT_OPTIONS = [
-  {
-    value: PathsMemberApiV1AdmMembersGetParametersQuerySort.ID,
-    label: "최신순",
-  },
-  {
-    value: PathsMemberApiV1AdmMembersGetParametersQuerySort.ID_ASC,
-    label: "오래된순",
-  },
-  {
-    value: PathsMemberApiV1AdmMembersGetParametersQuerySort.USERNAME,
-    label: "아이디순",
-  },
-  {
-    value: PathsMemberApiV1AdmMembersGetParametersQuerySort.USERNAME_ASC,
-    label: "아이디 역순",
-  },
-  {
-    value: PathsMemberApiV1AdmMembersGetParametersQuerySort.NICKNAME,
-    label: "닉네임순",
-  },
-  {
-    value: PathsMemberApiV1AdmMembersGetParametersQuerySort.NICKNAME_ASC,
-    label: "닉네임 역순",
-  },
+const SORT_OPTIONS: { value: Sort; label: string }[] = [
+  { value: "ID", label: "최신순" },
+  { value: "ID_ASC", label: "오래된순" },
+  { value: "USERNAME", label: "아이디순" },
+  { value: "USERNAME_ASC", label: "아이디 역순" },
+  { value: "NICKNAME", label: "닉네임순" },
+  { value: "NICKNAME_ASC", label: "닉네임 역순" },
 ];
 
 function PageContent() {
@@ -65,16 +42,8 @@ function PageContent() {
 
   const page = Number(searchParams.get("page") || "1");
   const kw = searchParams.get("kw") || "";
-  const kwType =
-    (searchParams.get(
-      "kwType",
-    ) as PathsMemberApiV1AdmMembersGetParametersQueryKwType) ||
-    PathsMemberApiV1AdmMembersGetParametersQueryKwType.ALL;
-  const sort =
-    (searchParams.get(
-      "sort",
-    ) as PathsMemberApiV1AdmMembersGetParametersQuerySort) ||
-    PathsMemberApiV1AdmMembersGetParametersQuerySort.ID;
+  const kwType = (searchParams.get("kwType") as KwType) || "ALL";
+  const sort = (searchParams.get("sort") as Sort) || "ID";
 
   const [memberPage, setMemberPage] =
     useState<PageDtoMemberWithUsernameDto | null>(null);
@@ -86,8 +55,8 @@ function PageContent() {
           query: {
             page,
             kw: kw || undefined,
-            kwType: kw ? kwType : undefined,
-            sort,
+            kwType: kw ? (kwType as never) : undefined,
+            sort: sort as never,
           },
         },
       })
@@ -120,9 +89,7 @@ function PageContent() {
     router.push(`?${query}`);
   };
 
-  const handleSortChange = (
-    newSort: PathsMemberApiV1AdmMembersGetParametersQuerySort,
-  ) => {
+  const handleSortChange = (newSort: Sort) => {
     const query = buildQueryString({
       page: "1",
       kw: kw || undefined,
@@ -186,12 +153,7 @@ function PageContent() {
           정렬:{" "}
           <select
             value={sort}
-            onChange={(e) =>
-              handleSortChange(
-                e.target
-                  .value as PathsMemberApiV1AdmMembersGetParametersQuerySort,
-              )
-            }
+            onChange={(e) => handleSortChange(e.target.value as Sort)}
           >
             {SORT_OPTIONS.map((opt) => (
               <option key={opt.value} value={opt.value}>

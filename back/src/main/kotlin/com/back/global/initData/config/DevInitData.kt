@@ -23,7 +23,6 @@ class DevInitData {
                 "-o", "../front/src/global/backend/apiV1/schema.d.ts",
                 "--properties-required-by-default",
                 "--alphabetize",
-                "--enum",
                 "--export-type",
             )
         }
