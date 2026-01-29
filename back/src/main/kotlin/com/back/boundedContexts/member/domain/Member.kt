@@ -1,7 +1,9 @@
-package com.back.boundedContexts.member.domain.shared
+package com.back.boundedContexts.member.domain
 
-import com.back.boundedContexts.member.out.shared.MemberAttrRepository
-import com.back.global.jpa.domain.BaseTime
+import com.back.boundedContexts.member.dto.MemberDto
+import com.back.boundedContexts.member.dto.MemberWithUsernameDto
+import com.back.boundedContexts.member.out.MemberAttrRepository
+import com.back.global.jpa.domain.shared.BaseTime
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import org.hibernate.annotations.NaturalId
@@ -101,17 +103,36 @@ class Member(
         this.apiKey = apiKey
     }
 
+    fun toMemberWithUsernameDto() = MemberWithUsernameDto(
+        this.id,
+        this.createdAt,
+        this.modifiedAt,
+        this.admin,
+        this.username,
+        this.name,
+        this.profileImgUrlOrDefault
+    )
+
+    fun toMemberDto() = MemberDto(
+        this.id,
+        this.createdAt,
+        this.modifiedAt,
+        this.admin,
+        this.name,
+        this.profileImgUrlOrDefault
+    )
+
     // ================================
     // Security 영역
     // ================================
 
     @delegate:Transient
-    val isAdmin: Boolean by lazy {
+    val admin: Boolean by lazy {
         username in setOf("system", "admin")
     }
 
     val authoritiesAsStringList: List<String>
-        get() = buildList { if (isAdmin) add("ROLE_ADMIN") }
+        get() = buildList { if (admin) add("ROLE_ADMIN") }
 
     val authorities: Collection<GrantedAuthority>
         get() = authoritiesAsStringList.map { SimpleGrantedAuthority(it) }

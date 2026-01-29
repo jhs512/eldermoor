@@ -1,4 +1,4 @@
-package com.back.global.security.config.oauth2.app
+package com.back.global.security.sub.oauth2.domain
 
 import com.back.standard.extensions.base64Decode
 import com.back.standard.extensions.base64Encode

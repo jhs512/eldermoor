@@ -1,4 +1,4 @@
-package com.back.global.security.domain
+package com.back.global.security.domain.shared
 
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.User

@@ -1,6 +1,6 @@
 package com.back.global.exceptionHandler.config
 
-import com.back.global.exception.app.BusinessException
+import com.back.global.exceptions.BusinessException
 import com.back.global.dto.RsData
 import jakarta.validation.ConstraintViolationException
 import org.springframework.http.HttpStatus

@@ -1,5 +1,6 @@
 package com.back.global.initData.config
 
+import com.back.global.app.app.shared.AppFacade
 import com.back.standard.util.Ut
 import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
@@ -18,9 +19,12 @@ class DevInitData {
                 "--yes",
                 "--package", "typescript",
                 "--package", "openapi-typescript",
-                "openapi-typescript", "http://localhost:8080/v3/api-docs/apiV1",
+                "openapi-typescript", "${AppFacade.backBaseUrl}/v3/api-docs/apiV1",
                 "-o", "../front/src/global/backend/apiV1/schema.d.ts",
-                "--properties-required-by-default"
+                "--properties-required-by-default",
+                "--alphabetize",
+                "--enum",
+                "--export-type",
             )
         }
     }

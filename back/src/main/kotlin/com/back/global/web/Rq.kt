@@ -1,9 +1,9 @@
 package com.back.global.web
 
 import com.back.boundedContexts.member.app.shared.ActorFacade
-import com.back.boundedContexts.member.domain.shared.Member
-import com.back.boundedContexts.member.domain.shared.MemberProxy
-import com.back.global.security.domain.SecurityUser
+import com.back.boundedContexts.member.domain.Member
+import com.back.boundedContexts.member.domain.MemberProxy
+import com.back.global.security.domain.shared.SecurityUser
 import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse

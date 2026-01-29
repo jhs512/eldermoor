@@ -1,4 +1,4 @@
-package com.back.global.exception.app
+package com.back.global.exceptions
 
 import com.back.global.dto.RsData
 

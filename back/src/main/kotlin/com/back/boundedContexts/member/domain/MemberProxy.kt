@@ -1,4 +1,4 @@
-package com.back.boundedContexts.member.domain.shared
+package com.back.boundedContexts.member.domain
 
 class MemberProxy(
     private val real: Member,
@@ -45,4 +45,8 @@ class MemberProxy(
         set(value) {
             real.password = value
         }
+
+    override fun toMemberDto() = real.toMemberDto()
+
+    override fun toMemberWithUsernameDto() = real.toMemberWithUsernameDto()
 }

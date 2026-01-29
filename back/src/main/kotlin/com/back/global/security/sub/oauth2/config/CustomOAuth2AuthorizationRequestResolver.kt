@@ -1,6 +1,6 @@
-package com.back.global.security.config.oauth2
+package com.back.global.security.sub.oauth2.config
 
-import com.back.global.security.config.oauth2.app.OAuth2State
+import com.back.global.security.sub.oauth2.domain.OAuth2State
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository
 import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizationRequestResolver

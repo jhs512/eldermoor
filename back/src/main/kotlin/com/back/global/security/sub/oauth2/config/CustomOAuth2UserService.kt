@@ -1,7 +1,7 @@
-package com.back.global.security.config.oauth2
+package com.back.global.security.sub.oauth2.config
 
 import com.back.boundedContexts.member.app.MemberFacade
-import com.back.global.security.domain.SecurityUser
+import com.back.global.security.domain.shared.SecurityUser
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest
 import org.springframework.security.oauth2.core.user.OAuth2User
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 private enum class OAuth2Provider {
-    KAKAO, GOOGLE, NAVER;
+    KAKAO, GOOGLE;
 
     companion object {
         fun from(registrationId: String): OAuth2Provider =
@@ -47,17 +47,6 @@ class CustomOAuth2UserService(
                     oAuth2User.name,
                     attrs.getValue("name") as String,
                     attrs.getValue("picture") as String
-                )
-            }
-
-            OAuth2Provider.NAVER -> {
-                @Suppress("UNCHECKED_CAST")
-                val resp = (oAuth2User.attributes.getValue("response") as Map<String, Any>)
-
-                Triple(
-                    resp.getValue("id") as String,
-                    resp.getValue("nickname") as String,
-                    resp.getValue("profile_image") as String
                 )
             }
         }

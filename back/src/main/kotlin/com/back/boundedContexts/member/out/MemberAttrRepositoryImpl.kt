@@ -1,7 +1,7 @@
-package com.back.boundedContexts.member.out.shared
+package com.back.boundedContexts.member.out
 
-import com.back.boundedContexts.member.domain.shared.Member
-import com.back.boundedContexts.member.domain.shared.MemberAttr
+import com.back.boundedContexts.member.domain.Member
+import com.back.boundedContexts.member.domain.MemberAttr
 import jakarta.persistence.EntityManager
 import org.hibernate.Session
 

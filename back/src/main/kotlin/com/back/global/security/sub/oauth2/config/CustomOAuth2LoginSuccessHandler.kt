@@ -1,7 +1,7 @@
-package com.back.global.security.config.oauth2
+package com.back.global.security.sub.oauth2.config
 
 import com.back.boundedContexts.member.app.shared.ActorFacade
-import com.back.global.security.config.oauth2.app.OAuth2State
+import com.back.global.security.sub.oauth2.domain.OAuth2State
 import com.back.global.web.Rq
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse

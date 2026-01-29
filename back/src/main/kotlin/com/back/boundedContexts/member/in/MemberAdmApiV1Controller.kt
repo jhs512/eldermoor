@@ -15,20 +15,29 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/member/api/v1/adm/members")
-@Tag(name = "ApiV1AdmMemberController", description = "관리자용 API 회원 컨트롤러")
+@Tag(name = "MemberAdmApiV1Controller", description = "회원(관리자용) 컨트롤러")
 @SecurityRequirement(name = "bearerAuth")
-class ApiV1AdmMemberController(
+class MemberAdmApiV1Controller(
     private val memberFacade: MemberFacade
 ) {
-    @GetMapping
     @Transactional(readOnly = true)
+    @GetMapping
     @Operation(summary = "다건 조회")
     fun getItems(
-        @RequestParam(defaultValue = "1") page: Int,
-        @RequestParam(defaultValue = "5") pageSize: Int,
-        @RequestParam(defaultValue = "ALL") kwType: MemberSearchKeywordType1,
-        @RequestParam(defaultValue = "") kw: String,
-        @RequestParam(defaultValue = "ID") sort: MemberSearchSortType1,
+        @RequestParam(defaultValue = "1")
+        page: Int,
+
+        @RequestParam(defaultValue = "5")
+        pageSize: Int,
+
+        @RequestParam(defaultValue = "ALL")
+        kwType: MemberSearchKeywordType1,
+
+        @RequestParam(defaultValue = "")
+        kw: String,
+
+        @RequestParam(defaultValue = "ID")
+        sort: MemberSearchSortType1,
     ): PageDto<MemberWithUsernameDto> {
         val page: Int = if (page >= 1) {
             page
@@ -46,18 +55,19 @@ class ApiV1AdmMemberController(
 
         return PageDto(
             memberPage
-                .map { member -> MemberWithUsernameDto(member) }
+                .map { member -> member.toMemberWithUsernameDto() }
         )
     }
 
-    @GetMapping("/{id}")
     @Transactional(readOnly = true)
+    @GetMapping("/{id}")
     @Operation(summary = "단건 조회")
     fun getItem(
-        @PathVariable id: Int
+        @PathVariable
+        id: Int
     ): MemberWithUsernameDto {
         val member = memberFacade.findById(id).getOrThrow()
 
-        return MemberWithUsernameDto(member)
+        return member.toMemberWithUsernameDto()
     }
 }

@@ -1,11 +1,11 @@
 package com.back.global.security.config
 
 import com.back.boundedContexts.member.app.shared.ActorFacade
-import com.back.boundedContexts.member.domain.shared.Member
-import com.back.global.app.config.AppConfig
+import com.back.boundedContexts.member.domain.Member
+import com.back.global.app.app.shared.AppFacade
 import com.back.global.dto.RsData
-import com.back.global.exception.app.BusinessException
-import com.back.global.security.domain.SecurityUser
+import com.back.global.exceptions.BusinessException
+import com.back.global.security.domain.shared.SecurityUser
 import com.back.global.web.Rq
 import com.back.standard.util.Ut
 import jakarta.servlet.FilterChain
@@ -26,23 +26,21 @@ class CustomAuthenticationFilter(
     private val rq: Rq,
 ) : OncePerRequestFilter() {
 
-    private val publicApiPaths = setOf(
-        "/member/api/v1/members/login",
-        "/member/api/v1/members/logout",
-        "/member/api/v1/members/join",
-    )
-
     private val publicApiPatterns = listOf(
-        Regex("/member/api/v1/members/\\d+/redirectToProfileImg")
+        Regex("/member/api/v[^/]+/members/login"),
+        Regex("/member/api/v[^/]+/members/logout"),
+        Regex("/member/api/v[^/]+/members/join"),
+        Regex("/member/api/v[^/]+/members/\\d+/redirectToProfileImg"),
     )
 
-    private val apiPrefixes = listOf("/member/api/", "/post/api/")
+    private val apiPrefixPattern = Regex("/[^/]+/api/")
 
     override fun shouldNotFilter(request: HttpServletRequest): Boolean {
         val uri = request.requestURI
-        if (apiPrefixes.none { uri.startsWith(it) }) return true
-        if (uri in publicApiPaths) return true
+
+        if (!apiPrefixPattern.containsMatchIn(uri)) return true
         if (publicApiPatterns.any { it.matches(uri) }) return true
+
         return false
     }
 
@@ -63,22 +61,23 @@ class CustomAuthenticationFilter(
 
     private fun work(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
         val (apiKey, accessToken) = extractTokens()
+
         if (apiKey.isBlank() && accessToken.isBlank()) {
             filterChain.doFilter(request, response)
             return
         }
 
-        if (apiKey == AppConfig.systemMemberApiKey && accessToken.isEmpty()) {
-            authenticate(Member(1, "system", "시스템"))
+        if (apiKey == AppFacade.systemMemberApiKey) {
+            authenticate(Member(AppFacade.systemMemberId, AppFacade.systemMemberUsername, AppFacade.systemMemberNickname))
+
             filterChain.doFilter(request, response)
             return
         }
 
         val (member, isAccessTokenValid) = resolveMember(apiKey, accessToken)
 
-        if (accessToken.isNotBlank() && !isAccessTokenValid) {
+        if (accessToken.isNotBlank() && !isAccessTokenValid)
             refreshAccessToken(member)
-        }
 
         authenticate(member)
 
@@ -127,7 +126,7 @@ class CustomAuthenticationFilter(
             member.id,
             member.username,
             "",
-            member.name,
+            member.nickname,
             member.authorities
         )
 

@@ -1,9 +1,10 @@
 package com.back.global.security.config
 
 import com.back.boundedContexts.member.config.MemberSecurityConfig
+import com.back.global.app.app.shared.AppFacade
 import com.back.global.dto.RsData
-import com.back.global.security.config.oauth2.CustomOAuth2AuthorizationRequestResolver
-import com.back.global.security.config.oauth2.CustomOAuth2LoginSuccessHandler
+import com.back.global.security.sub.oauth2.config.CustomOAuth2AuthorizationRequestResolver
+import com.back.global.security.sub.oauth2.config.CustomOAuth2LoginSuccessHandler
 import com.back.standard.util.Ut
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -103,15 +104,14 @@ class SecurityConfig(
     @Bean
     fun corsConfigurationSource(): UrlBasedCorsConfigurationSource {
         val configuration = CorsConfiguration().apply {
-            allowedOrigins = listOf("https://cdpn.io", "http://localhost:3000")
+            allowedOrigins = listOf("https://cdpn.io", AppFacade.frontBaseUrl)
             allowedMethods = listOf("GET", "POST", "PUT", "PATCH", "DELETE")
             allowCredentials = true
             allowedHeaders = listOf("*")
         }
 
         return UrlBasedCorsConfigurationSource().apply {
-            registerCorsConfiguration("/member/api/**", configuration)
-            registerCorsConfiguration("/post/api/**", configuration)
+            registerCorsConfiguration("/*/api/**", configuration)
         }
     }
 }

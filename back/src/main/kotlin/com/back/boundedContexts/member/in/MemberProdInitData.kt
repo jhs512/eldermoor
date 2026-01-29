@@ -11,15 +11,15 @@ import org.springframework.context.annotation.Profile
 import org.springframework.core.annotation.Order
 import org.springframework.transaction.annotation.Transactional
 
-@Profile("!prod")
+@Profile("prod")
 @Configuration
-class MemberNotProdInitData(
+class MemberProdInitData(
     private val memberFacade: MemberFacade,
     private val appFacade: AppFacade,
 ) {
     @Lazy
     @Autowired
-    private lateinit var self: MemberNotProdInitData
+    private lateinit var self: MemberProdInitData
 
     @Bean
     @Order(1)
@@ -39,26 +39,7 @@ class MemberNotProdInitData(
         val memberHolding = memberFacade.join("holding", "", "홀딩")
         memberHolding.modifyApiKey(memberHolding.username)
 
-        val memberAdmin = memberFacade.join("admin", "1234", "관리자")
+        val memberAdmin = memberFacade.join("admin", "", "관리자")
         memberAdmin.modifyApiKey(memberAdmin.username)
-
-        val memberUser1 = memberFacade.join("user1", "1234", "유저1")
-        memberUser1.modifyApiKey(memberUser1.username)
-
-        val memberUser2 = memberFacade.join("user2", "1234", "유저2")
-        memberUser2.modifyApiKey(memberUser2.username)
-
-        val memberUser3 = memberFacade.join("user3", "1234", "유저3")
-        memberUser3.modifyApiKey(memberUser3.username)
-
-        appFacade.notProdMembers.forEach { notProdMember ->
-            val socialMember = memberFacade.join(
-                notProdMember.username,
-                null,
-                notProdMember.nickname,
-                notProdMember.profileImgUrl
-            )
-            socialMember.modifyApiKey(notProdMember.apiKey)
-        }
     }
 }
