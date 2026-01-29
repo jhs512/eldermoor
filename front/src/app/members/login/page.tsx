@@ -19,7 +19,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 
-import { LogIn } from "lucide-react";
+import { LogIn, MessageCircle } from "lucide-react";
 
 export default withLogout(function Page() {
   const router = useRouter();
@@ -142,7 +142,10 @@ export default withLogout(function Page() {
 
           <div className="flex flex-col gap-2">
             <Button variant="outline" className="w-full" asChild>
-              <a href={loginUrl("kakao")}>카카오로 로그인</a>
+              <a href={loginUrl("kakao")}>
+                <MessageCircle className="mr-2 h-4 w-4" />
+                카카오로 로그인
+              </a>
             </Button>
             <Button variant="outline" className="w-full" asChild>
               <a href={loginUrl("google")}>구글로 로그인</a>

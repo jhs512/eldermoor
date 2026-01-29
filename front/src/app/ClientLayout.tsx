@@ -27,10 +27,10 @@ import { Separator } from "@/components/ui/separator";
 
 import {
   Copyright,
-  Home,
   LogIn,
   LogOut,
   Menu,
+  MessageCircle,
   MonitorCog,
   User,
   UserRoundSearch,
@@ -85,7 +85,7 @@ export default function ClientLayout({
                       asChild
                     >
                       <Link href="/">
-                        <Home className="mr-2 h-4 w-4" /> 홈
+                        <span className="mr-2">🦄</span> 홈
                       </Link>
                     </Button>
                   </DrawerClose>
@@ -125,7 +125,10 @@ export default function ClientLayout({
                           className="w-full justify-start"
                           asChild
                         >
-                          <a href={loginUrl("kakao")}>카카오 로그인</a>
+                          <a href={loginUrl("kakao")}>
+                            <MessageCircle className="mr-2 h-4 w-4" /> 카카오
+                            로그인
+                          </a>
                         </Button>
                       </DrawerClose>
                       <DrawerClose asChild>
@@ -170,7 +173,9 @@ export default function ClientLayout({
           </Drawer>
 
           <Button variant="ghost" asChild>
-            <Link href="/">Eldermoor</Link>
+            <Link href="/">
+              <span className="mr-1">🦄</span> 10xunicon
+            </Link>
           </Button>
 
           <div className="flex-grow" />
@@ -219,7 +224,7 @@ export default function ClientLayout({
         <div className="hidden sm:flex container mx-auto py-1 px-4">
           <Button variant="ghost" asChild>
             <Link href="/">
-              <Home className="mr-2 h-4 w-4" /> Eldermoor
+              <span className="mr-1">🦄</span> 10xunicon
             </Link>
           </Button>
 
@@ -243,7 +248,9 @@ export default function ClientLayout({
                 </Link>
               </Button>
               <Button variant="ghost" asChild>
-                <a href={loginUrl("kakao")}>카카오</a>
+                <a href={loginUrl("kakao")}>
+                  <MessageCircle className="mr-2 h-4 w-4" /> 카카오
+                </a>
               </Button>
               <Button variant="ghost" asChild>
                 <a href={loginUrl("google")}>구글</a>
@@ -290,7 +297,7 @@ export default function ClientLayout({
       <footer className="border-t py-4">
         <div className="container mx-auto px-4 flex justify-center items-center gap-4 text-sm text-muted-foreground">
           <span className="flex items-center gap-1">
-            <Copyright className="h-4 w-4" /> 2025 Eldermoor
+            <Copyright className="h-4 w-4" /> 2025 10xunicon
           </span>
           {isAdmin && !isAdminPage && (
             <Button variant="link" size="sm" asChild>

@@ -12,8 +12,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "사이트 A",
-  description: "스프링부트, Next.js 연동",
+  title: "10xunicon",
+  description: "10xunicon - 개발자 성장 플랫폼",
 };
 
 export default function RootLayout({
