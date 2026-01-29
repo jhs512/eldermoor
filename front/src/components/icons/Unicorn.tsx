@@ -7,21 +7,23 @@ export default function Unicorn(props: SVGProps<SVGSVGElement>) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.5"
+      strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
       {...props}
     >
+      {/* Cute round face */}
+      <circle cx="12" cy="14" r="8" />
       {/* Horn */}
-      <path d="M12 2L10 9" />
-      {/* Head outline */}
-      <path d="M10 9C7 9 5 11.5 5 14.5C5 17 6.5 19 9 20L8 22" />
-      <path d="M10 9C10 9 11.5 9 13 10C14.5 11 16 13 16 15.5C16 18 14 20 11 20" />
-      {/* Mane */}
-      <path d="M13 10C14 8 15 7 16 7" />
-      <path d="M14 12C15 11 16 10 17 10" />
-      {/* Eye */}
-      <circle cx="9" cy="14" r="1" fill="currentColor" stroke="none" />
+      <path d="M12 6L10.5 2L13.5 2Z" fill="currentColor" />
+      {/* Ears */}
+      <path d="M6 9L4 5L8 8" />
+      <path d="M18 9L20 5L16 8" />
+      {/* Big cute eyes */}
+      <circle cx="9" cy="13" r="1.5" fill="currentColor" />
+      <circle cx="15" cy="13" r="1.5" fill="currentColor" />
+      {/* Cute smile */}
+      <path d="M9 17C10 18 14 18 15 17" />
     </svg>
   );
 }
