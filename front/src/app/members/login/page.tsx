@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import withLogout from "@/global/auth/hoc/withLogout";
 import { useAuthContext } from "@/global/auth/hooks/useAuth";
 import client from "@/global/backend/client";
+import { FaGoogle } from "react-icons/fa";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -148,7 +149,10 @@ export default withLogout(function Page() {
               </a>
             </Button>
             <Button variant="outline" className="w-full" asChild>
-              <a href={loginUrl("google")}>구글로 로그인</a>
+              <a href={loginUrl("google")}>
+                <FaGoogle className="mr-2 h-4 w-4" />
+                구글로 로그인
+              </a>
             </Button>
           </div>
         </CardContent>

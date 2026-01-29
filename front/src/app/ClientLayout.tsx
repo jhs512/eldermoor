@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
 import { useAuthContext } from "@/global/auth/hooks/useAuth";
+import { FaGoogle } from "react-icons/fa";
 import { GiUnicorn } from "react-icons/gi";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -138,7 +139,9 @@ export default function ClientLayout({
                           className="w-full justify-start"
                           asChild
                         >
-                          <a href={loginUrl("google")}>구글 로그인</a>
+                          <a href={loginUrl("google")}>
+                            <FaGoogle className="mr-2 h-4 w-4" /> 구글 로그인
+                          </a>
                         </Button>
                       </DrawerClose>
                     </>
@@ -254,7 +257,9 @@ export default function ClientLayout({
                 </a>
               </Button>
               <Button variant="ghost" asChild>
-                <a href={loginUrl("google")}>구글</a>
+                <a href={loginUrl("google")}>
+                  <FaGoogle className="mr-2 h-4 w-4" /> 구글
+                </a>
               </Button>
             </>
           )}
